@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const request = require("request");
 
 const app = express();
@@ -33,6 +34,11 @@ app.get("/api/:branch/package.json", async (req, res) => {
   const { branch = "develop" } = req.params;
   const result = await getPackage(branch);
   res.json(JSON.stringify(result));
+});
+
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname, '..', 'build/index.html'));
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
