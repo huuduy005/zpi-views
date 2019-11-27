@@ -11,6 +11,10 @@ export function getSpa(branch) {
   ).then(res => {
     // this.setState( { oldValue: JSON.stringify(res, null, 4)})
     const t = JSON.parse(res).dependencies;
+    Object.keys(t).forEach(name => {
+      if (!/^@zpi/.test(name)) delete t[name];
+    });
+
     const mm = JSON.stringify(t, null, 4);
 
     return mm;
